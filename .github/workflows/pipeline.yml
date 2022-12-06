@@ -1,0 +1,83 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Bot - Runner
+
+on:
+  # [push]
+  push:
+    branches: [ "*" ]
+  pull_request:
+    branches: [ "*" ]
+
+  schedule:
+
+    - cron: "6,12,18,24,30,36,42,48,54,0 * * * *"
+    #- cron: "*/5 * * * *"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Start Selenoid server
+        uses: n-ton4/selenoid-github-action@master
+        id: start-selenoid
+        continue-on-error: false
+        with:
+          version: 1.10.1
+          args: -limit 10
+          browsers: chrome
+          last-versions: 1
+
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: Build with Maven
+        run: mvn -B clean test -Dapp_url=${{ secrets.APP_URL }} -Dusername=${{ secrets.USERNAME }} -Dpassword=${{ secrets.PASSWORD }}
+
+      - name: Cache the Maven packages to speed up build
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Upload target folder
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: target
+          retention-days: 2
+          path: |
+            ${{ github.workspace }}/target
+
+      - name: Send email
+        if: failure()
+        # You may pin to the exact commit or the version.
+        # uses: dawidd6/action-send-mail@v2
+        uses: dawidd6/action-send-mail@v3.7.1
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          # Subject of mail message
+          subject: ${{ secrets.EMAIL_SUBJECT }}
+          # Recipients mail addresses (separated with comma)
+          bcc: ${{ secrets.CC_EMAIL_RECIPIENT }}
+          # Full name of mail sender (might be with an email address specified in <>)
+          from: The Big D
+          # Body of mail message (might be a filename prefixed with file:// to read from)
+          body: ${{secrets.EMAIL_BODY}}
+          # HTML body of mail message (might be a filename prefixed with file:// to read from)
+          # Files that will be added to mail message attachments (separated with comma)
+          #attachments: # optional
+          #attachments: ./dist/static/*.js
+
