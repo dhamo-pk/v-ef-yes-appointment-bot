@@ -64,7 +64,7 @@ public class SlotCheckerTest {
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             wait = new WebDriverWait(driver, 5);
 
- /*           WebElement consent = driver.findElement(By.id("onetrust-reject-all-handler"));
+            WebElement consent = driver.findElement(By.id("onetrust-reject-all-handler"));
             wait.until(ExpectedConditions.elementToBeClickable(consent));
             consent.click();
 
@@ -131,7 +131,7 @@ public class SlotCheckerTest {
 
             createMessageForUser(msg2, CENTER_HYDERABAD, "Visiting Family and Friends");
             System.out.println(msgToUser.toString());
-*/
+
             if (msgToUser.toString().length() > 0) {
                 Assert.fail("No slots");
             } else {
