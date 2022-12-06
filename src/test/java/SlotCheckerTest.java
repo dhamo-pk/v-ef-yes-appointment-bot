@@ -27,7 +27,7 @@ public class SlotCheckerTest {
     private final String VISA_SHORT_TERM = "Short Term";
     private final String VISA_VISITING = "Visting";
 
-    private StringBuilder msgToUser = new StringBuilder();
+    private StringBuilder msgToUser = new StringBuilder("b");
 
     @BeforeClass(enabled = true)
     public void setUpRemote() throws Exception {
@@ -64,7 +64,7 @@ public class SlotCheckerTest {
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             wait = new WebDriverWait(driver, 5);
 
-            WebElement consent = driver.findElement(By.id("onetrust-reject-all-handler"));
+ /*           WebElement consent = driver.findElement(By.id("onetrust-reject-all-handler"));
             wait.until(ExpectedConditions.elementToBeClickable(consent));
             consent.click();
 
@@ -83,7 +83,6 @@ public class SlotCheckerTest {
 
             WebElement newBookingBtn = driver.findElement(By.xpath("//div[@class='position-relative']/button[contains(.,'Start New Booking')]"));
             wait.until(ExpectedConditions.elementToBeClickable(newBookingBtn));
-            System.out.println("Current URL is:" + driver.getCurrentUrl());
             Assert.assertTrue(driver.getTitle().contains("Dashboard"));
 
             newBookingBtn.click();
@@ -132,7 +131,7 @@ public class SlotCheckerTest {
 
             createMessageForUser(msg2, CENTER_HYDERABAD, "Visiting Family and Friends");
             System.out.println(msgToUser.toString());
-
+*/
             if (msgToUser.toString().length() > 0) {
                 Assert.fail("No slots");
             } else {
