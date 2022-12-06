@@ -27,7 +27,7 @@ public class SlotCheckerTest {
     private final String VISA_SHORT_TERM = "Short Term";
     private final String VISA_VISITING = "Visting";
 
-    private StringBuilder msgToUser = new StringBuilder("b");
+    private StringBuilder msgToUser = new StringBuilder();
 
     @BeforeClass(enabled = true)
     public void setUpRemote() throws Exception {
