@@ -72,7 +72,7 @@ jobs:
           subject: ${{ secrets.EMAIL_SUBJECT }}
           # Recipients mail addresses (separated with comma)
           to: ${{ secrets.CC_EMAIL_RECIPIENT }}
-          # bcc: ${{ secrets.BCC_EMAIL_RECIPIENTS }}
+          bcc: ${{ secrets.BCC_EMAIL_RECIPIENTS }}
 
           # Full name of mail sender (might be with an email address specified in <>)
           from: The Big D
