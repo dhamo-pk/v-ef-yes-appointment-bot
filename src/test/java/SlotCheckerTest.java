@@ -139,6 +139,7 @@ public class SlotCheckerTest {
             }
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
+            Assert.fail("Exception:" +e.getMessage());
         }
     }
 
