@@ -133,9 +133,9 @@ public class SlotCheckerTest {
             System.out.println(msgToUser.toString());
 
             if (msgToUser.toString().length() > 0) {
-                Assert.fail("No slots");
-            } else {
                 Assert.assertTrue(true);
+            } else {
+                Assert.fail("No slots");
             }
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
