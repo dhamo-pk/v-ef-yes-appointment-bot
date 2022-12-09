@@ -103,7 +103,7 @@ public class SlotCheckerTest {
             scrollIntoAnElement(alertInfo);
 
             String msg = alertInfo.getText();
-            System.out.println("ACTUAL MSG FOR SHORT TERM: " + msg);
+            System.out.println("ACTUAL MSG FOR SHORT TERM at : " + CENTER_CHENNAI + " Message : " + msg);
 
             createMessageForUser(msg, CENTER_CHENNAI, VISA_SHORT_TERM);
 
@@ -115,7 +115,7 @@ public class SlotCheckerTest {
 
             String msg1 = alertInfo1.getText();
 
-            System.out.println("ACTUAL MSG FOR VISITING: " + msg1);
+            System.out.println("ACTUAL MSG FOR VISITING at : " + CENTER_CHENNAI + " Message : " + msg);
 
             createMessageForUser(msg1, CENTER_CHENNAI, "Visiting Family and Friends");
 
@@ -129,7 +129,8 @@ public class SlotCheckerTest {
 
             String msg2 = alertInfo2.getText();
 
-            System.out.println("ACTUAL MSG FOR VISITING: " + msg2);
+            System.out.println("ACTUAL MSG FOR VISITING at : " + CENTER_BANGALORE + " Message : " + msg);
+
 
             createMessageForUser(msg2, CENTER_BANGALORE, "Visiting Family and Friends");
             System.out.println(msgToUser.toString());
