@@ -22,16 +22,20 @@ jobs:
 
     steps:
       - name: Send email
+        
         if: success()
         # You may pin to the exact commit or the version.
         # uses: dawidd6/action-send-mail@v2
         uses: dawidd6/action-send-mail@v3.7.1
+        
         with:
           server_address: smtp.gmail.com
+          convert_markdown: true
           server_port: 465
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           # Subject of mail message
+          
           subject: ${{ secrets.EMAIL_SUBJECT }}
           # Recipients mail addresses (separated with comma)
           to: ${{ secrets.CC_EMAIL_RECIPIENT }}
