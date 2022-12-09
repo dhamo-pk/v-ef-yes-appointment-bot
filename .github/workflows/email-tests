@@ -1,0 +1,47 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Bot - Runner
+
+on:
+  # [push]
+  push:
+    branches: [ "*" ]
+  pull_request:
+    branches: [ "*" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send email
+        if: success()
+        # You may pin to the exact commit or the version.
+        # uses: dawidd6/action-send-mail@v2
+        uses: dawidd6/action-send-mail@v3.7.1
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          # Subject of mail message
+          subject: ${{ secrets.EMAIL_SUBJECT }}
+          # Recipients mail addresses (separated with comma)
+          to: ${{ secrets.CC_EMAIL_RECIPIENT }}
+          
+          # Full name of mail sender (might be with an email address specified in <>)
+          from: The Big D
+          # Body of mail message (might be a filename prefixed with file:// to read from)
+          body: ${{secrets.EMAIL_BODY}}
+          # HTML body of mail message (might be a filename prefixed with file:// to read from)
+          # Files that will be added to mail message attachments (separated with comma)
+          #attachments: # optional
+          #attachments: ./dist/static/*.js
+
