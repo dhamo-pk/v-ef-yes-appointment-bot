@@ -24,6 +24,8 @@ public class SlotCheckerTest {
     private final String APPOINTMENT_AVAILABLE_MSG = "Earliest Available Slot";
     private final String CENTER_CHENNAI = "Denmark Visa Application Centre, Chennai";
     private final String CENTER_HYDERABAD = "Denmark Visa Application Centre, Hyderabad";
+    private final String CENTER_BANGALORE = "Denmark Visa Application Centre, Bangalore";
+    
     private final String VISA_SHORT_TERM = "Short Term";
     private final String VISA_VISITING = "Visting";
 
@@ -117,7 +119,7 @@ public class SlotCheckerTest {
 
             createMessageForUser(msg1, CENTER_CHENNAI, "Visiting Family and Friends");
 
-            matSelectInput("mat-select-0", CENTER_HYDERABAD);
+            matSelectInput("mat-select-0", CENTER_BANGALORE);
 
             matSelectInput("mat-select-4", VISA_VISITING);
 
@@ -129,7 +131,7 @@ public class SlotCheckerTest {
 
             System.out.println("ACTUAL MSG FOR VISITING: " + msg2);
 
-            createMessageForUser(msg2, CENTER_HYDERABAD, "Visiting Family and Friends");
+            createMessageForUser(msg2, CENTER_BANGALORE, "Visiting Family and Friends");
             System.out.println(msgToUser.toString());
 
             if (msgToUser.toString().length() > 0) {
