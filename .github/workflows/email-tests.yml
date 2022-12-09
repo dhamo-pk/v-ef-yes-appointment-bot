@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Bot - Runner
+name: Email - Tests
 
 on:
   # [push]
