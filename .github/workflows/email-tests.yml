@@ -36,14 +36,14 @@ jobs:
           password: ${{ secrets.EMAIL_PASSWORD }}
           # Subject of mail message
           
-          subject: ${{ secrets.EMAIL_SUBJECT }}
+          subject: Test
           # Recipients mail addresses (separated with comma)
           to: ${{ secrets.CC_EMAIL_RECIPIENT }}
           
           # Full name of mail sender (might be with an email address specified in <>)
           from: The Big D
           # Body of mail message (might be a filename prefixed with file:// to read from)
-          body: ${{secrets.EMAIL_BODY}}
+          # body: 
           # HTML body of mail message (might be a filename prefixed with file:// to read from)
           # Files that will be added to mail message attachments (separated with comma)
           #attachments: # optional
