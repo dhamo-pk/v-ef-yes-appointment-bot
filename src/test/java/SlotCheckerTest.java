@@ -129,7 +129,7 @@ public class SlotCheckerTest {
 
             this.searchForAnyVisaCategoryInAnyCenter(CENTER_BANGALORE, VISA_VISITING);
 
-            System.out.println(msgToUser.toString());
+            System.out.println("#####" + msgToUser.toString());
 
             if (msgToUser.toString().length() > 0) {
                 Assert.assertTrue(true);
