@@ -9,11 +9,11 @@
 name: Email - Tests
 
 on:
-  # [push]
-  push:
-    branches: [ "*" ]
-  pull_request:
-    branches: [ "*" ]
+#  # [push]
+#  push:
+#    branches: [ "*" ]
+#  pull_request:
+#    branches: [ "*" ]
   workflow_dispatch:
 
 jobs:
