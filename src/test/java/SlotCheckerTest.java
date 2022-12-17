@@ -6,6 +6,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -15,6 +17,7 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 public class SlotCheckerTest {
@@ -85,11 +88,12 @@ public class SlotCheckerTest {
         WebElement submitBtn = driver.findElement(By.cssSelector("button > .mat-button-wrapper"));
         submitBtn.click();
 
-        waitForLoadingWindowToInvisible();
+        Wait<WebDriver> gWait = new FluentWait<WebDriver>(driver).withTimeout(Duration.ofSeconds(100))
+                .pollingEvery(Duration.ofMillis(1500)).ignoring(NoSuchElementException.class);
 
-//        wait.until(ExpectedConditions.titleContains("Dashboard"));
-//
-//        waitForLoadingWindowToInvisible();
+        gWait.until(ExpectedConditions.titleContains("Dashboard"));
+
+        waitForLoadingWindowToInvisible();
     }
 
     private void searchForAnyVisaCategoryInAnyCenter(String centerName, String typeOfVisa) {
