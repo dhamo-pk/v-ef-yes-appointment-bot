@@ -91,6 +91,11 @@ public class SlotCheckerTest {
         Wait<WebDriver> gWait = new FluentWait<WebDriver>(driver).withTimeout(Duration.ofSeconds(100))
                 .pollingEvery(Duration.ofMillis(15000)).ignoring(NoSuchElementException.class);
 
+        WebElement element = driver.findElement(By.tagName("header"));
+
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+        js.executeScript("arguments[0].scrollIntoView();", element);
+
         gWait.until(ExpectedConditions.titleContains("Dashboard"));
 
         waitForLoadingWindowToInvisible();
