@@ -140,6 +140,7 @@ public class SlotCheckerTest {
             }
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
+            takeSnapShot(driver, "target/Exception.png");
             Assert.fail("Exception:" + e.getMessage());
         }
     }
