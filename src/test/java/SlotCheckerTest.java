@@ -138,18 +138,18 @@ public class SlotCheckerTest {
 
             this.searchForAnyVisaCategoryInAnyCenter(CENTER_CHENNAI, VISA_VISITING);
 
-            this.searchForAnyVisaCategoryInAnyCenter(CENTER_BANGALORE, VISA_VISITING);
-
-            System.out.println("#####" + msgToUser.toString());
+            this.searchForAnyVisaCategoryInAnyCenter(CENTER_HYDERABAD, VISA_VISITING);
 
             if (msgToUser.toString().length() > 0) {
                 Assert.assertTrue(true);
+                System.out.println("#####" + msgToUser.toString());
             } else {
                 Assert.fail("No slots");
             }
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
             takeSnapShot(driver, "target/Exception.png");
+            System.out.println("Page Source: "+ driver.findElement(By.xpath("//html/body")).getText());
             Assert.fail("Exception:" + e.getMessage());
         }
     }
