@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 public class SlotCheckerTest {
     private WebDriver driver;
     private WebDriverWait wait;
-
+ private Wait<WebDriver> gWait;
     // private final String NO_APPOINTMENT_MSG = "No appointment slots are currently available. Please try another application centre if applicable";
     private final String APPOINTMENT_AVAILABLE_MSG = "Earliest Available Slot";
     private final String CENTER_CHENNAI = "Denmark Visa Application Centre, Chennai";
@@ -68,10 +68,13 @@ public class SlotCheckerTest {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         wait = new WebDriverWait(driver, 5);
+        gWait = new FluentWait<WebDriver>(driver).withTimeout(Duration.ofSeconds(100))
+                .pollingEvery(Duration.ofMillis(15000)).ignoring(NoSuchElementException.class);
+
     }
 
     private void waitForElementToBeClickable(WebElement elem) {
-        wait.until(ExpectedConditions.elementToBeClickable(elem));
+        gWait.until(ExpectedConditions.elementToBeClickable(elem));
     }
 
     private void performLogin() {
@@ -88,15 +91,13 @@ public class SlotCheckerTest {
         WebElement submitBtn = driver.findElement(By.cssSelector("button > .mat-button-wrapper"));
         submitBtn.click();
 
-        Wait<WebDriver> gWait = new FluentWait<WebDriver>(driver).withTimeout(Duration.ofSeconds(100))
-                .pollingEvery(Duration.ofMillis(15000)).ignoring(NoSuchElementException.class);
 
         WebElement element = driver.findElement(By.tagName("header"));
 
         JavascriptExecutor js = (JavascriptExecutor)driver;
         js.executeScript("arguments[0].scrollIntoView();", element);
 
-        gWait.until(ExpectedConditions.titleContains("Dashboard"));
+        //gWait.until(ExpectedConditions.titleContains("Dashboard"));
 
         waitForLoadingWindowToInvisible();
     }
@@ -184,13 +185,12 @@ public class SlotCheckerTest {
 
     private void waitForLoadingWindowToInvisible() {
         try {
-            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(@class,'loading-foreground')]")));
+            gWait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(@class,'loading-foreground')]")));
         } catch (Exception e) {
         }
     }
 
     public void matSelectInput(String id, String value) {
-
         WebElement elem = driver.findElement(By.id(id));
         wait.until(ExpectedConditions.elementToBeClickable(elem));
         scrollIntoAnElement(elem);
