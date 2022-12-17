@@ -34,7 +34,7 @@ public class SlotCheckerTest {
 
     private String tempCenter = "";
 
-    @BeforeClass(enabled = false)
+    @BeforeClass(enabled = true)
     public void setUpRemote() throws Exception {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("browserName", "chrome");
@@ -43,7 +43,7 @@ public class SlotCheckerTest {
         driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
     }
 
-    @BeforeClass(enabled = true)
+    @BeforeClass(enabled = false)
     public void setUpLocal() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
