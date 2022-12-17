@@ -112,12 +112,11 @@ public class SlotCheckerTest {
 
         matSelectInput("mat-select-4", typeOfVisa);
 
-        WebElement alertInfo = driver.findElement(By.cssSelector(".alert-info"));
-        wait.until(ExpectedConditions.visibilityOf(alertInfo));
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector(".alert-info"))));
 
-        scrollIntoAnElement(alertInfo);
+        scrollIntoAnElement(driver.findElement(By.cssSelector(".alert-info")));
 
-        String msg = alertInfo.getText();
+        String msg = driver.findElement(By.cssSelector(".alert-info")).getText();
 
         System.out.println(String.format("STATUS : Center: %s., Type: %s., Msg: %s", centerName, typeOfVisa, msg));
 
