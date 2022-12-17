@@ -89,7 +89,7 @@ public class SlotCheckerTest {
         submitBtn.click();
 
         Wait<WebDriver> gWait = new FluentWait<WebDriver>(driver).withTimeout(Duration.ofSeconds(100))
-                .pollingEvery(Duration.ofMillis(1500)).ignoring(NoSuchElementException.class);
+                .pollingEvery(Duration.ofMillis(15000)).ignoring(NoSuchElementException.class);
 
         gWait.until(ExpectedConditions.titleContains("Dashboard"));
 
