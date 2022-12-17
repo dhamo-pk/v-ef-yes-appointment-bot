@@ -85,6 +85,8 @@ public class SlotCheckerTest {
         WebElement submitBtn = driver.findElement(By.cssSelector("button > .mat-button-wrapper"));
         submitBtn.click();
 
+        waitForLoadingWindowToInvisible();
+
         wait.until(ExpectedConditions.titleContains("Dashboard"));
 
         waitForLoadingWindowToInvisible();

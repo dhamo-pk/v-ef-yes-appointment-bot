@@ -18,7 +18,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -37,7 +36,7 @@ jobs:
           password: ${{ secrets.EMAIL_PASSWORD }}
           # Subject of mail message
           
-          subject: Test
+          subject: Test - Ignore
           # Recipients mail addresses (separated with comma)
           to: ${{ secrets.CC_EMAIL_RECIPIENT }}
           
