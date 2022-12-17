@@ -78,6 +78,7 @@ jobs:
           body: ${{secrets.EMAIL_BODY}}
 
       - name: Sleep for 150 seconds
+        if: success()
         run: sleep 150s
         shell: bash
 
