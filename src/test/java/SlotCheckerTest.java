@@ -87,9 +87,9 @@ public class SlotCheckerTest {
 
         waitForLoadingWindowToInvisible();
 
-        wait.until(ExpectedConditions.titleContains("Dashboard"));
-
-        waitForLoadingWindowToInvisible();
+//        wait.until(ExpectedConditions.titleContains("Dashboard"));
+//
+//        waitForLoadingWindowToInvisible();
     }
 
     private void searchForAnyVisaCategoryInAnyCenter(String centerName, String typeOfVisa) {
