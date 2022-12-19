@@ -138,7 +138,7 @@ public class SlotCheckerTest {
 
             this.searchForAnyVisaCategoryInAnyCenter(CENTER_CHENNAI, VISA_VISITING);
 
-            this.searchForAnyVisaCategoryInAnyCenter(CENTER_HYDERABAD, VISA_VISITING);
+            this.searchForAnyVisaCategoryInAnyCenter(CENTER_BANGALORE, VISA_VISITING);
 
             if (msgToUser.toString().length() > 0) {
                 Assert.assertTrue(true);
