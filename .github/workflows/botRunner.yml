@@ -46,8 +46,8 @@ jobs:
 
       - name: Read output from Maven
         run : |
-          output=${{ steps.testExecution.outputs.stdout }}
-          echo "Execution Output: output"
+          OUTPUT=${{ steps.testExecution.outputs }}
+          echo "Execution Output: $OUTPUT"
 
       - name: Cache the Maven packages to speed up build
         uses: actions/cache@v1
