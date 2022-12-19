@@ -25,9 +25,8 @@ jobs:
     build:
       runs-on: ubuntu-latest
       outputs:
-        output1: ${{ steps.step1.outputs.stdout }}
+        output1: ${{ steps.testExecution.outputs.stdout }}
       steps:
-      id: step1
         - name: Start Selenoid server
           uses: n-ton4/selenoid-github-action@master
           id: start-selenoid
