@@ -21,72 +21,74 @@ on:
     #- cron: "*/5 * * * *"
 
 jobs:
-  build:
+  job1:
+    build:
 
-    runs-on: ubuntu-latest
+      runs-on: ubuntu-latest
+      outputs:
+        output1: ${{ steps.testExecution.outputs.stdout }}
+      steps:
+        - name: Start Selenoid server
+          uses: n-ton4/selenoid-github-action@master
+          id: start-selenoid
+          continue-on-error: false
+          with:
+            version: 1.10.1
+            args: -limit 10
+            browsers: chrome
+            last-versions: 1
 
-    steps:
-      - name: Start Selenoid server
-        uses: n-ton4/selenoid-github-action@master
-        id: start-selenoid
-        continue-on-error: false
-        with:
-          version: 1.10.1
-          args: -limit 10
-          browsers: chrome
-          last-versions: 1
+        - name: checkout
+          uses: actions/checkout@v2
 
-      - name: checkout
-        uses: actions/checkout@v2
+        - name: Build with Maven
+          id: testExecution
+          run: |
+            mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B clean test -Dapp_url=${{ secrets.APP_URL }} -Dusername=${{ secrets.USERNAME }} -Dpassword=${{ secrets.PASSWORD }}
 
-      - name: Build with Maven
-        id: testExecution
-        run: |
-          mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B clean test -Dapp_url=${{ secrets.APP_URL }} -Dusername=${{ secrets.USERNAME }} -Dpassword=${{ secrets.PASSWORD }}
+        - name: Read output from Maven
+          run : |
+            run: echo ${{needs.job1.outputs.output1}}
+  
 
-      - name: Read output from Maven
-        run : |
-          OUTPUT=${{ steps.testExecution.outputs.stdout }}
-          echo "Execution Output: $OUTPUT"
+        - name: Cache the Maven packages to speed up build
+          uses: actions/cache@v1
+          with:
+            path: ~/.m2
+            key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+            restore-keys: ${{ runner.os }}-m2
 
-      - name: Cache the Maven packages to speed up build
-        uses: actions/cache@v1
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
+        - name: Upload target folder
+          if: always()
+          uses: actions/upload-artifact@v2
+          with:
+            name: target
+            retention-days: 2
+            path: |
+              ${{ github.workspace }}/target
 
-      - name: Upload target folder
-        if: always()
-        uses: actions/upload-artifact@v2
-        with:
-          name: target
-          retention-days: 2
-          path: |
-            ${{ github.workspace }}/target
+        - name: Send email
+          if: cancelled()
+          # You may pin to the exact commit or the version.
+          # uses: dawidd6/action-send-mail@v2
+          uses: dawidd6/action-send-mail@v3.7.1
+          with:
+            server_address: smtp.gmail.com
+            server_port: 465
+            username: ${{ secrets.USERNAME }}
+            password: ${{ secrets.EMAIL_PASSWORD }}
+            # Subject of mail message
+            subject: ${{ secrets.EMAIL_SUBJECT }}
+            # Recipients mail addresses (separated with comma)
+            to: ${{ secrets.CC_EMAIL_RECIPIENT }}
+            #bcc: ${{ secrets.BCC_EMAIL_RECIPIENTS }}
 
-      - name: Send email
-        if: cancelled()
-        # You may pin to the exact commit or the version.
-        # uses: dawidd6/action-send-mail@v2
-        uses: dawidd6/action-send-mail@v3.7.1
-        with:
-          server_address: smtp.gmail.com
-          server_port: 465
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.EMAIL_PASSWORD }}
-          # Subject of mail message
-          subject: ${{ secrets.EMAIL_SUBJECT }}
-          # Recipients mail addresses (separated with comma)
-          to: ${{ secrets.CC_EMAIL_RECIPIENT }}
-          #bcc: ${{ secrets.BCC_EMAIL_RECIPIENTS }}
-
-          # Full name of mail sender (might be with an email address specified in <>)
-          from: The Big D
-          # Body of mail message (might be a filename prefixed with file:// to read from)
-          body: ${{secrets.EMAIL_BODY}}
-          # HTML body of mail message (might be a filename prefixed with file:// to read from)
-          # Files that will be added to mail message attachments (separated with comma)
-          #attachments: # optional
-          #attachments: ./dist/static/*.js
+            # Full name of mail sender (might be with an email address specified in <>)
+            from: The Big D
+            # Body of mail message (might be a filename prefixed with file:// to read from)
+            body: ${{secrets.EMAIL_BODY}}
+            # HTML body of mail message (might be a filename prefixed with file:// to read from)
+            # Files that will be added to mail message attachments (separated with comma)
+            #attachments: # optional
+            #attachments: ./dist/static/*.js
 
