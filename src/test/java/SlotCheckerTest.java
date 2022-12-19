@@ -157,6 +157,7 @@ public class SlotCheckerTest {
     private void navigateToBookingSection() {
         WebElement newBookingBtn = driver.findElement(By.xpath("//div[@class='position-relative']/button[contains(.,'Start New Booking')]"));
         waitForElementToBeClickable(newBookingBtn);
+        
         Assert.assertTrue(driver.getTitle().contains("Dashboard"));
 
         newBookingBtn.click();
