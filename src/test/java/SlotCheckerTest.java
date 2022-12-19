@@ -52,7 +52,7 @@ public class SlotCheckerTest {
         driver = new ChromeDriver();
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void sampleTest() throws IOException {
         try {
             driver.get("https://www.google.com");
@@ -125,7 +125,7 @@ public class SlotCheckerTest {
         takeSnapShot(driver, "target/" + centerName + "_" + typeOfVisa + ".png");
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void userLogin() throws Exception {
         try {
             this.initialLaunchSetUp();

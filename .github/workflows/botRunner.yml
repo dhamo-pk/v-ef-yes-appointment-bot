@@ -40,7 +40,14 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build with Maven
-        run: mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B clean test -Dapp_url=${{ secrets.APP_URL }} -Dusername=${{ secrets.USERNAME }} -Dpassword=${{ secrets.PASSWORD }}
+        id: testExecution
+        run: |
+          mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B clean test -Dapp_url=${{ secrets.APP_URL }} -Dusername=${{ secrets.USERNAME }} -Dpassword=${{ secrets.PASSWORD }}
+
+      - name: Read output from Maven
+        run : |
+          DEPENDENCIES=${{ steps.testExecution.outputs.stdout }}
+          echo "Execution Output: testExecution"
 
       - name: Cache the Maven packages to speed up build
         uses: actions/cache@v1
@@ -59,7 +66,7 @@ jobs:
             ${{ github.workspace }}/target
 
       - name: Send email
-        if: success()
+        if: cancelled()
         # You may pin to the exact commit or the version.
         # uses: dawidd6/action-send-mail@v2
         uses: dawidd6/action-send-mail@v3.7.1
@@ -72,7 +79,7 @@ jobs:
           subject: ${{ secrets.EMAIL_SUBJECT }}
           # Recipients mail addresses (separated with comma)
           to: ${{ secrets.CC_EMAIL_RECIPIENT }}
-          bcc: ${{ secrets.BCC_EMAIL_RECIPIENTS }}
+          #bcc: ${{ secrets.BCC_EMAIL_RECIPIENTS }}
 
           # Full name of mail sender (might be with an email address specified in <>)
           from: The Big D
