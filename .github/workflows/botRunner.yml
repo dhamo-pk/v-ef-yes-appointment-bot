@@ -21,7 +21,6 @@ on:
     #- cron: "*/5 * * * *"
 
 jobs:
-  job1:
     build:
       runs-on: ubuntu-latest
     
