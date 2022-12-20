@@ -24,8 +24,7 @@ jobs:
   job1:
     build:
       runs-on: ubuntu-latest
-      outputs:
-        output1: ${{ steps.testExecution.outputs.stdout }}
+    
       steps:
         - name: Start Selenoid server
           uses: n-ton4/selenoid-github-action@master
@@ -43,12 +42,19 @@ jobs:
         - id: testExecution
           name: Build with Maven
           run: |
-            mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B clean test -Dapp_url=${{ secrets.APP_URL }} -Dusername=${{ secrets.USERNAME }} -Dpassword=${{ secrets.PASSWORD }}
-
+            output1 = ${ mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B clean test -Dapp_url=${{ secrets.APP_URL }} -Dusername=${{ secrets.USERNAME }} -Dpassword=${{ secrets.PASSWORD }} }
+            echo "output1"
+            echo output1
+            echo "$output1"
+            echo $output1
+            
         - name: Read output from Maven
           run : |
-            run: echo $output1
-
+            echo $output1
+            echo "output1"
+            echo output1
+            echo "$output1"
+            echo $output1
         - name: Cache the Maven packages to speed up build
           uses: actions/cache@v1
           with:
